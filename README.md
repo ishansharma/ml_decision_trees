@@ -4,7 +4,7 @@ Code for implementing Decision Trees with different heuristics in Python 3.
 
 Created by Ishan Sharma (ixs171130@utdallas.edu) as part of CS6375 (Spring 2018) class assignment at University of Texas at Dallas. 
 
-Copyright [2018] [Ishan Sharma]
+Copyright 2018 Ishan Sharma
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
