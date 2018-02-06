@@ -1,5 +1,7 @@
 import argparse
 
+from files import reader
+
 parser = argparse.ArgumentParser(description="""Creates a decision tree from given files with Information Gain and Variance Impurity heuristics. 
  After constructing, it will do post pruning Then outputs accuracies and if asked, prints the decision tree""")
 
@@ -16,9 +18,17 @@ parser.add_argument('training_set_path', type=str, help='Path to training set')
 parser.add_argument('validation_set_path', type=str, help='Path to validation set')
 
 # path to test set
-parser.add_argument('validation_set_path', type=str, help='Path to test set')
+parser.add_argument('test_set_path', type=str, help='Path to test set')
 
 # whether to print the tree or not
 parser.add_argument('to_print', type=str, help='Whether to print or not')
 
 args = parser.parse_args()
+
+training_csv = reader.read_csv(args.training_set_path)
+validation_csv = reader.read_csv(args.validation_set_path)
+test_csv = reader.read_csv(args.test_set_path)
+
+print(training_csv)
+print(validation_csv)
+print(test_csv)
