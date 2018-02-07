@@ -25,6 +25,12 @@ def construct(data, target_attribute, attributes_to_test):
     if value_test[0]:
         return tree.Node('', value_test[1])
 
+    # if we don't have any attributes, return most common value in root node
+    if len(attributes_to_test) == 0:
+        # found this elegant solution on Stack Overflow, https://stackoverflow.com/a/15139677/616941
+        most_common_value = getattr(data, target_attribute).value_counts().idxmax()
+        return tree.Node('', most_common_value)
+
     # dummy node for now
     root = tree.Node('XA', 0)
 

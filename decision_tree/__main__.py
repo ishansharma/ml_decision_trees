@@ -31,4 +31,4 @@ training_data = reader.read_csv(args.training_set_path)
 validation_data = reader.read_csv(args.validation_set_path)
 test_data = reader.read_csv(args.test_set_path)
 
-print(id3.construct(training_data, 'Class', training_data.columns[:-1]))
+print(id3.construct(training_data, 'Class', training_data.columns[:-1]))  # arr[:-1] gets everything except last element
