@@ -31,4 +31,4 @@ training_data = reader.read_csv(args.training_set_path)
 validation_data = reader.read_csv(args.validation_set_path)
 test_data = reader.read_csv(args.test_set_path)
 
-print(id3.construct(0, 0, 0))
+print(id3.construct(training_data, 'Class', training_data.columns[:-1]))
