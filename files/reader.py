@@ -3,6 +3,8 @@ from os.path import isfile
 import pandas as pd
 
 
+# do a quick check if the CSV path exists. If it doesn't, exit.
+# if the file exists, read it using Pandas and return resulting dataframe
 def read_csv(filepath=''):
     if not _does_file_exist(filepath):
         print("The file " + filepath + " does not exist")
