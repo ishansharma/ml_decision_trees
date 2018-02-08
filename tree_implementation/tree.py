@@ -9,6 +9,8 @@ class Node:
     def __init__(self, attribute, label):
         self.label = label  # should be 0 for negative, 1 for positive
         self.attribute = attribute  # attribute that we split on
+        self.left = None
+        self.right = None
 
     def __str__(self):
         return str(self.attribute) + " = " + str(self.label)

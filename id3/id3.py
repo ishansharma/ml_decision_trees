@@ -29,7 +29,7 @@ def construct(data, target_attribute, attributes_to_test):
     if len(attributes_to_test) == 0:
         # found this elegant solution on Stack Overflow, https://stackoverflow.com/a/15139677/616941
         most_common_value = getattr(data, target_attribute).value_counts().idxmax()
-        return tree.Node('', most_common_value)
+        return tree.Node(target_attribute, most_common_value)
 
     # dummy node for now
     root = tree.Node('XA', 0)
