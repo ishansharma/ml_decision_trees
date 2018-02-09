@@ -20,12 +20,12 @@ def ig_heuristic(data, cols):
     highest_gain = 0
 
     for column in cols:
-        # we won't need to calculate IG for class :)
+        # we won't need to calculate IG for class
         if column == 'Class':
             continue
 
         # will need a filter to be placed here for column that has been decided above in the tree and its value
-        value_counts = getattr(data, column).value_counts()
+        value_counts = data.Class.value_counts()
 
         # quick check to make sure we don't fail when all values are 0 or 1
         if 0 not in value_counts:
@@ -60,6 +60,7 @@ def ig_heuristic(data, cols):
             p_positives = positives_entropy_points[1]
 
         p_entropy = calculate_entropy(p_positives, p_negatives)
+        p_total = p_negatives + p_positives
 
         # print("Positive", column, "Counts")
         # print(positives_entropy_points)
@@ -81,6 +82,7 @@ def ig_heuristic(data, cols):
             n_positives = negatives_entropy_points[1]
 
         n_entropy = calculate_entropy(n_positives, n_negatives)
+        n_total = n_negatives + n_positives
 
         # print("Negative", column, "Counts")
         # print(negatives_entropy_points)
@@ -89,11 +91,7 @@ def ig_heuristic(data, cols):
         #
         # print("\n**********\n")
 
-        # count total positives, negatives and calculate IG
-        n_total = n_positives + n_negatives
-        p_total = p_positives + p_negatives
-
-        information_gain = entropy - (((p_positives / p_total) * p_entropy) + ((n_positives / n_total) * n_entropy))
+        information_gain = entropy - (((p_total / total) * p_entropy) + ((n_total / total) * n_entropy))
 
         if information_gain > 0:
             information_gain = round(information_gain, 5)
