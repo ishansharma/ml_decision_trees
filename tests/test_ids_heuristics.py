@@ -26,7 +26,7 @@ class TestHeuristics(unittest.TestCase):
 class TestInformationGainHeuristic(unittest.TestCase):
     def test_ig_heuristic(self):
         # dummy test to get started
-        self.assertEqual(heuristics.ig_heuristic("", []), "")
+        self.assertEqual(heuristics.ig_heuristic("", [], {}), "")
 
         # create our dataframe (this is for boolean function a OR (b AND c)
         tt = {'a': [0, 0, 0, 0, 1, 1, 1, 1],
@@ -36,10 +36,10 @@ class TestInformationGainHeuristic(unittest.TestCase):
         df = pd.DataFrame(data=tt)
 
         # a will have most IG since if it's true, everything's true
-        self.assertEqual(heuristics.ig_heuristic(df, ['a', 'b', 'c']), 'a')
+        self.assertEqual(heuristics.ig_heuristic(df, ['a', 'b', 'c'], {}), 'a')
 
-        # c will have next biggest IG (equal to b), but our algorithm gives preference to later one
-        # self.assertEqual(heuristics.ig_heuristic(df, ['b', 'c']), 'c')
+        # c will have next biggest IG (equal to b), but our algorithm gives preference to first one
+        self.assertEqual(heuristics.ig_heuristic(df, ['b', 'c'], {'a': 0}), 'b')
 
 
 if __name__ == '__main__':

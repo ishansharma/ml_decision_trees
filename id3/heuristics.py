@@ -1,7 +1,7 @@
 import math
 
 
-def ig_heuristic(data, cols):
+def ig_heuristic(data, cols, fixed_values):
     """
     Accepts the data and column names. Calculates IG for each column and returns the column with highest gain
     Parameters
@@ -9,8 +9,9 @@ def ig_heuristic(data, cols):
     data: DataFrame
         Pandas DataFrame
     cols: ArrayLike
-        An array or iterable
-
+        An array of keys we'd like to calculate for
+    fixed_values: Dict
+        Dictionary that will contain tree that we have already fixed
     Returns
     -------
     str
@@ -19,12 +20,15 @@ def ig_heuristic(data, cols):
     column_with_highest_gain = ""
     highest_gain = 0
 
+    # filter to remove data that doesn't fix our fixed_values
+    for key in fixed_values:
+        data = data.loc[(data[key] == fixed_values[key])]
+
     for column in cols:
         # we won't need to calculate IG for class
         if column == 'Class':
             continue
 
-        # will need a filter to be placed here for column that has been decided above in the tree and its value
         value_counts = data.Class.value_counts()
 
         # quick check to make sure we don't fail when all values are 0 or 1
