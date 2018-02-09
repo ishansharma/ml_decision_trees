@@ -20,12 +20,12 @@ def ig_heuristic(data, cols, fixed_values):
     column_with_highest_gain = ""
     highest_gain = 0
 
-    # filter to remove data that doesn't fix our fixed_values
+    # filter to remove data that doesn't match our fixed_values
     for key in fixed_values:
         data = data.loc[(data[key] == fixed_values[key])]
 
     for column in cols:
-        # we won't need to calculate IG for class
+        # we won't need to calculate IG for the Class column
         if column == 'Class':
             continue
 
@@ -66,11 +66,6 @@ def ig_heuristic(data, cols, fixed_values):
         p_entropy = calculate_entropy(p_positives, p_negatives)
         p_total = p_negatives + p_positives
 
-        # print("Positive", column, "Counts")
-        # print(positives_entropy_points)
-        # print("Entropy is", p_entropy)
-        # print("===")
-
         # entropy for negative data points
         negative_df = data.loc[(data[column] == 0)]
         negatives_entropy_points = negative_df.Class.value_counts()
@@ -87,13 +82,6 @@ def ig_heuristic(data, cols, fixed_values):
 
         n_entropy = calculate_entropy(n_positives, n_negatives)
         n_total = n_negatives + n_positives
-
-        # print("Negative", column, "Counts")
-        # print(negatives_entropy_points)
-        # print("Entropy is", n_entropy)
-        # print("===")
-        #
-        # print("\n**********\n")
 
         information_gain = entropy - (((p_total / total) * p_entropy) + ((n_total / total) * n_entropy))
 
