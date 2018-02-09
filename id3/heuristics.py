@@ -19,15 +19,11 @@ def ig_heuristic(data, cols):
     column_with_highest_gain = ""
     highest_gain = 0
 
-    iterations = 0
-    loop_exec = 0
     for column in cols:
-        iterations += 1
         # we won't need to calculate IG for class :)
         if column == 'Class':
             continue
 
-        loop_exec += 1
         # will need a filter to be placed here for column that has been decided above in the tree and its value
         value_counts = getattr(data, column).value_counts()
 
@@ -106,8 +102,6 @@ def ig_heuristic(data, cols):
             highest_gain = information_gain
             column_with_highest_gain = column
 
-    # print(column_with_highest_gain, "has highest information gain of", highest_gain)
-    # print("iterations", iterations, "with executions:", loop_exec)
     return column_with_highest_gain
 
 
