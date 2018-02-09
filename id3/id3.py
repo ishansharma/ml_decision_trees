@@ -1,3 +1,4 @@
+from id3 import heuristics
 from tree_implementation import tree
 
 
@@ -33,6 +34,9 @@ def construct(data, target_attribute, attributes_to_test):
 
     # dummy node for now
     root = tree.Node('XA', 0)
+
+    # check the best heuristic
+    heuristics.ig_heuristic(data, attributes_to_test)
 
     return root
 

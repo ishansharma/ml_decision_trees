@@ -18,5 +18,11 @@ class TestHeuristics(unittest.TestCase):
         self.assertAlmostEqual(heuristics.calculate_entropy(positives=10, negatives=0), 0.0)
 
 
+class TestInformationGainHeuristic(unittest.TestCase):
+    def test_ig_heuristic(self):
+        # dummy test to get started
+        self.assertEqual(heuristics.ig_heuristic("", []), "")
+
+
 if __name__ == '__main__':
     unittest.main()
