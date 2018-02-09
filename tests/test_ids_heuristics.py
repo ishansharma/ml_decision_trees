@@ -1,5 +1,7 @@
 import unittest
 
+import pandas as pd
+
 from id3 import heuristics
 
 
@@ -10,6 +12,9 @@ class TestHeuristics(unittest.TestCase):
 
         # known value
         self.assertAlmostEqual(heuristics.calculate_entropy(positives=16, negatives=14), 0.99679)
+
+        # boolean tree value
+        self.assertAlmostEqual(heuristics.calculate_entropy(positives=5, negatives=3), 0.95443)
 
         # edge case: equal distribution
         self.assertAlmostEqual(heuristics.calculate_entropy(positives=15, negatives=15), 1.0)
@@ -22,6 +27,19 @@ class TestInformationGainHeuristic(unittest.TestCase):
     def test_ig_heuristic(self):
         # dummy test to get started
         self.assertEqual(heuristics.ig_heuristic("", []), "")
+
+        # create our dataframe (this is for boolean function a OR (b AND c)
+        tt = {'a': [0, 0, 0, 0, 1, 1, 1, 1],
+              'b': [0, 0, 1, 1, 0, 0, 1, 1],
+              'c': [0, 1, 0, 1, 0, 1, 0, 1],
+              'Class': [0, 0, 0, 1, 1, 1, 1, 1]}
+        df = pd.DataFrame(data=tt)
+
+        # a will have most IG since if it's true, everything's true
+        self.assertEqual(heuristics.ig_heuristic(df, ['a', 'b', 'c']), 'a')
+
+        # c will have next biggest IG (equal to b), but our algorithm gives preference to later one
+        # self.assertEqual(heuristics.ig_heuristic(df, ['b', 'c']), 'c')
 
 
 if __name__ == '__main__':
