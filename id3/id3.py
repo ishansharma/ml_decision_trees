@@ -36,7 +36,7 @@ def construct(data, target_attribute, attributes_to_test):
     root = tree.Node('XA', 0)
 
     # check the best heuristic
-    heuristics.ig_heuristic(data, attributes_to_test)
+    heuristics.ig_heuristic(data, attributes_to_test, target_attribute, {})
 
     return root
 

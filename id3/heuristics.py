@@ -1,7 +1,7 @@
 import math
 
 
-def ig_heuristic(data, cols, fixed_values):
+def ig_heuristic(data, cols, target, fixed_values):
     """
     Accepts the data and column names. Calculates IG for each column and returns the column with highest gain
     Parameters
@@ -10,6 +10,8 @@ def ig_heuristic(data, cols, fixed_values):
         Pandas DataFrame
     cols: ArrayLike
         An array of keys we'd like to calculate for
+    target: str
+        Column name that we need to calculate for. Required to filter out the data
     fixed_values: Dict
         Dictionary that will contain tree that we have already fixed
     Returns
@@ -26,10 +28,10 @@ def ig_heuristic(data, cols, fixed_values):
 
     for column in cols:
         # we won't need to calculate IG for the Class column
-        if column == 'Class':
+        if column == target:
             continue
 
-        value_counts = data.Class.value_counts()
+        value_counts = getattr(data, target).value_counts()
 
         # quick check to make sure we don't fail when all values are 0 or 1
         if 0 not in value_counts:
@@ -51,7 +53,7 @@ def ig_heuristic(data, cols, fixed_values):
         # entropy of positive data points
         # Logic: filter current column for positives, then use Class for entropy
         positive_df = data.loc[(data[column] == 1)]
-        positives_entropy_points = positive_df.Class.value_counts()
+        positives_entropy_points = getattr(positive_df, target).value_counts()
 
         if 0 not in positives_entropy_points:
             p_negatives = 0
@@ -68,7 +70,7 @@ def ig_heuristic(data, cols, fixed_values):
 
         # entropy for negative data points
         negative_df = data.loc[(data[column] == 0)]
-        negatives_entropy_points = negative_df.Class.value_counts()
+        negatives_entropy_points = getattr(negative_df, target).value_counts()
 
         if 0 not in negatives_entropy_points:
             n_negatives = 0
