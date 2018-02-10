@@ -2,6 +2,7 @@
 import unittest
 
 from tests import test_id3_heuristics
+from tests import test_tree_construction
 
 
 def suite():
@@ -12,6 +13,9 @@ def suite():
 
     # tests for information gain
     test_suite.addTest(test_id3_heuristics.TestInformationGainHeuristic('test_ig_heuristic'))
+
+    # tests for tree construction
+    test_suite.addTest(test_tree_construction.TestTreeConstruction('test_binary_expression'))
 
     return test_suite
 
