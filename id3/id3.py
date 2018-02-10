@@ -15,13 +15,15 @@ def construct(data, target_attribute, attributes_to_test):
     target_attribute: str
         Decision tree will be constructed to guess this attribute
 
-    attributes_to_test: array
+    attributes_to_test: DataFrame
         List of all other attributes which will be used in tree construction
 
     Returns
     -------
 
     """
+    attributes_to_test = list(attributes_to_test)  # needed to make sure we can iterate
+
     value_test = test_for_all_same(data, target_attribute)  # Check if all values are same
 
     # if all values are same, we return that value in root
@@ -34,13 +36,11 @@ def construct(data, target_attribute, attributes_to_test):
         most_common_value = getattr(data, target_attribute).value_counts().idxmax()
         return tree.Node(target_attribute)
 
-    dt = tree.DecisionTree()
-
     # check the best heuristic
     selected_heuristic = heuristics.ig_heuristic(data, attributes_to_test, target_attribute, {})
 
     # insert the best heuristic at root
-    dt.root = tree.Node(selected_heuristic)
+    node = tree.Node(selected_heuristic)
 
     for i in [0, 1]:
         examples_vi = data.loc[(data[selected_heuristic] == i)]
@@ -48,22 +48,22 @@ def construct(data, target_attribute, attributes_to_test):
             mode = examples_vi.mode()
             mode = mode[selected_heuristic]
             if i == 0:
-                dt.root.left = tree.Node(mode)
+                node.left = tree.Node(mode)
             else:
-                dt.root.right = tree.Node(mode)
+                node.right = tree.Node(mode)
         else:
             if i == 0:
                 new_attributes = copy.copy(attributes_to_test)
                 if selected_heuristic in new_attributes:
                     new_attributes.remove(selected_heuristic)
-                dt.root.left = construct(examples_vi, target_attribute, new_attributes)
+                node.left = construct(examples_vi, target_attribute, new_attributes)
             else:
                 new_attributes = copy.copy(attributes_to_test)
                 if selected_heuristic in new_attributes:
                     new_attributes.remove(selected_heuristic)
-                dt.root.right = construct(examples_vi, target_attribute, new_attributes)
+                node.right = construct(examples_vi, target_attribute, new_attributes)
 
-    return dt
+    return node
 
 
 def test_for_all_same(data, target_attribute):
