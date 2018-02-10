@@ -1,7 +1,7 @@
 import copy
 
+from data_structures import tree
 from id3 import heuristics
-from tree_implementation import tree
 
 
 def construct(data, target_attribute, attributes_to_test):

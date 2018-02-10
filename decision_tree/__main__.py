@@ -1,8 +1,8 @@
 import argparse
 
+from data_structures import tree
 from files import reader
 from id3 import id3
-from tree_implementation import tree
 
 parser = argparse.ArgumentParser(description="""Creates a decision tree from given files with Information Gain and Variance Impurity heuristics. 
  After constructing, it will do post pruning Then outputs accuracies and if asked, prints the decision tree""")
@@ -37,5 +37,4 @@ unrooted_training_tree = id3.construct(training_data, 'Class',
                                        training_data.columns)  # arr[:-1] gets everything except last element
 
 training_tree.root = unrooted_training_tree
-
-print("Done")
+print(training_tree)
