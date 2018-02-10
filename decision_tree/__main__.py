@@ -3,6 +3,8 @@ import argparse
 from files import reader
 from id3 import id3
 
+# from tree_implementation import tree
+
 parser = argparse.ArgumentParser(description="""Creates a decision tree from given files with Information Gain and Variance Impurity heuristics. 
  After constructing, it will do post pruning Then outputs accuracies and if asked, prints the decision tree""")
 
@@ -31,4 +33,8 @@ training_data = reader.read_csv(args.training_set_path)
 validation_data = reader.read_csv(args.validation_set_path)
 test_data = reader.read_csv(args.test_set_path)
 
-print(id3.construct(training_data, 'Class', training_data.columns))  # arr[:-1] gets everything except last element
+# dt = tree.DecisionTree()
+tree = id3.construct(training_data, 'Class',
+                     list(training_data.columns))  # arr[:-1] gets everything except last element
+
+print("Done")

@@ -1,3 +1,5 @@
+import copy
+
 from id3 import heuristics
 from tree_implementation import tree
 
@@ -24,21 +26,44 @@ def construct(data, target_attribute, attributes_to_test):
 
     # if all values are same, we return that value in root
     if value_test[0]:
-        return tree.Node('', value_test[1])
+        return tree.Node(value_test[1])
 
     # if we don't have any attributes, return most common value in root node
     if len(attributes_to_test) == 0:
         # found this elegant solution on Stack Overflow, https://stackoverflow.com/a/15139677/616941
         most_common_value = getattr(data, target_attribute).value_counts().idxmax()
-        return tree.Node(target_attribute, most_common_value)
+        return tree.Node(target_attribute)
 
-    # dummy node for now
-    root = tree.Node('XA', 0)
+    dt = tree.DecisionTree()
 
     # check the best heuristic
-    heuristics.ig_heuristic(data, attributes_to_test, target_attribute, {})
+    selected_heuristic = heuristics.ig_heuristic(data, attributes_to_test, target_attribute, {})
 
-    return root
+    # insert the best heuristic at root
+    dt.root = tree.Node(selected_heuristic)
+
+    for i in [0, 1]:
+        examples_vi = data.loc[(data[selected_heuristic] == i)]
+        if examples_vi.count == 0:
+            mode = examples_vi.mode()
+            mode = mode[selected_heuristic]
+            if i == 0:
+                dt.root.left = tree.Node(mode)
+            else:
+                dt.root.right = tree.Node(mode)
+        else:
+            if i == 0:
+                new_attributes = copy.copy(attributes_to_test)
+                if selected_heuristic in new_attributes:
+                    new_attributes.remove(selected_heuristic)
+                dt.root.left = construct(examples_vi, target_attribute, new_attributes)
+            else:
+                new_attributes = copy.copy(attributes_to_test)
+                if selected_heuristic in new_attributes:
+                    new_attributes.remove(selected_heuristic)
+                dt.root.right = construct(examples_vi, target_attribute, new_attributes)
+
+    return dt
 
 
 def test_for_all_same(data, target_attribute):

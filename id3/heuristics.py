@@ -115,6 +115,11 @@ def calculate_entropy(positives, negatives):
 
     # since the calculations are reused, doesn't make sense to do every single time
     total = positives + negatives
+
+    # no entropy if we have no elements
+    if total == 0:
+        return 0.0
+
     positive_ratio = positives / total
     negative_ratio = negatives / total
 
