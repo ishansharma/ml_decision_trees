@@ -22,7 +22,17 @@ class TestTreeConstruction(unittest.TestCase):
         unrooted_tree = id3.construct(df, 'Class', df.columns)
         dt.root = unrooted_tree
 
-        # dt.print(dt.root)
-        # self.assertEqual(tree, '')
-        # self.assertEqual('', '')
-        # self.assertEqual()
+        expected_tree = """a = 0: 
+|b = 0: 0
+|b = 1: 
+||c = 0: 
+|||d = 0: 0
+|||d = 1: 1
+||c = 1: 1
+a = 1: 
+|c = 0: 
+||d = 0: 0
+||d = 1: 1
+|c = 1: 1"""
+
+        self.assertEquals(expected_tree, str(dt))
