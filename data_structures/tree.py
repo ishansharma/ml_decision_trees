@@ -58,7 +58,7 @@ class DecisionTree:
 
             # if we have to visit right
             if side == 1:
-                output_line += str('|' * st.size()) + str(current.label) + "= 1:"
+                output_line += str('|' * st.size()) + str(current.label) + " = 1: "
 
                 if current.right is not None:
                     if current.right.label in [0, 1]:
