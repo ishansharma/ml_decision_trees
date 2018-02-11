@@ -2,9 +2,10 @@ import copy
 
 from data_structures import tree
 from id3 import information_gain
+from id3 import variance_impurity
 
 
-def construct(data, target_attribute, attributes_to_test):
+def construct(data, target_attribute, attributes_to_test, heuristic="ig"):
     """
     Construct the tree using given parameters and return the tree
     Parameters
@@ -18,6 +19,8 @@ def construct(data, target_attribute, attributes_to_test):
     attributes_to_test: DataFrame
         List of all other attributes which will be used in tree construction
 
+    heuristic: str
+        Should be "ig" for information gain and "vi" for variance impurity
     Returns
     -------
     node: Node
@@ -38,7 +41,10 @@ def construct(data, target_attribute, attributes_to_test):
         return tree.Node(target_attribute)
 
     # check the best heuristic
-    selected_heuristic = information_gain.ig_heuristic(data, attributes_to_test, target_attribute, {})
+    if heuristic == "vi":
+        selected_heuristic = variance_impurity.variance_heuristic(data, attributes_to_test, target_attribute, {})
+    else:
+        selected_heuristic = information_gain.ig_heuristic(data, attributes_to_test, target_attribute, {})
 
     # insert the best heuristic at root
     node = tree.Node(selected_heuristic)

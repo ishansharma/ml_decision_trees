@@ -3,7 +3,8 @@ import math
 
 def ig_heuristic(data, cols, target, fixed_values):
     """
-    Accepts the data and column names. Calculates IG for each column and returns the column with highest gain
+    Accepts the data and column names, target attribute name and values that have to remain fixed
+    Calculates IG for each column and returns the column with highest gain
     Parameters
     ----------
     data: DataFrame
@@ -13,7 +14,7 @@ def ig_heuristic(data, cols, target, fixed_values):
     target: str
         Column name that we need to calculate for. Required to filter out the data
     fixed_values: Dict
-        Dictionary that will contain tree that we have already fixed
+        Dictionary that will contain tree values that we have already fixed
     Returns
     -------
     str
@@ -86,9 +87,6 @@ def ig_heuristic(data, cols, target, fixed_values):
         n_total = n_negatives + n_positives
 
         information_gain = entropy - (((p_total / total) * p_entropy) + ((n_total / total) * n_entropy))
-
-        if information_gain > 0:
-            information_gain = round(information_gain, 5)
 
         if information_gain > highest_gain:
             highest_gain = information_gain
