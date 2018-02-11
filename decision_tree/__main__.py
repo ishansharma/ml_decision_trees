@@ -63,17 +63,16 @@ pruned_accuracy_for_ig = accuracy.measure(copy.deepcopy(pruned_ig_tree), copy.de
 pruned_accuracy_for_vi = accuracy.measure(copy.deepcopy(pruned_vi_tree), copy.deepcopy(test_data), 'Class')
 
 # print(training_tree)
-print("Original IG accuracy:", ig_original_accuracy)
-print("Original VI accuracy:", vi_original_accuracy)
-print("Pruned IG tree accuracy:", pruned_accuracy_for_ig)
-print("Pruned VI tree accuracy:", pruned_accuracy_for_vi)
+print("Accuracy with Information Gain heuristic (unpruned):", ig_original_accuracy)
+print("Accuracy with Variance Impurity heuristic (unpruned):", vi_original_accuracy)
+print("Accuracy with Information Gain heuristic (pruned):", pruned_accuracy_for_ig)
+print("Accuracy with Variance Impurity heuristic (pruned):", pruned_accuracy_for_vi)
 
 if args.to_print == 'yes':
-    print("==========")
-    print("Pruned Trees:")
-    print("For IG Heuristic:")
+    print("\n\n==========")
+    print("Tree for Information Gain Heuristic (pruned):")
     print(pruned_ig_tree)
 
-    print("**********")
-    print("For VI Heuristic:")
+    print("\n**********")
+    print("Tree for Variance Impurity Heuristic (pruned):")
     print(pruned_vi_tree)

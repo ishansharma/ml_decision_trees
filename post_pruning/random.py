@@ -39,7 +39,11 @@ class Pruner:
 
             for j in range(3, replacements):
                 number_of_nodes = len(self._order_nodes(new_tree))
-                p = random.randrange(1, number_of_nodes)
+
+                if number_of_nodes < 3:
+                    p = 0
+                else:
+                    p = random.randrange(1, number_of_nodes)
 
                 new_tree = self._replace_node_with_majority_class(new_tree, p)
 
