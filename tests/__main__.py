@@ -25,6 +25,9 @@ def suite():
 
     # tests for pruning
     test_suite.addTest(test_pruner.TestPruner('test_list_ordering'))
+    test_suite.addTest(test_pruner.TestPruner('test_list_order_without_filter'))
+    test_suite.addTest(test_pruner.TestPruner('test_majority_class_search'))
+    test_suite.addTest(test_pruner.TestPruner('test_node_pruning'))
 
     return test_suite
 

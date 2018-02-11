@@ -8,6 +8,7 @@ from id3 import id3
 
 class TestTreeConstruction(unittest.TestCase):
     def test_binary_expression(self):
+        # TODO: Fix this test. Needs tree comparisons
         # dataframe for ((a OR b) AND (c or d)
         truth_table = {
             'a': [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
