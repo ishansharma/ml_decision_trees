@@ -1,7 +1,7 @@
 import copy
 
 from data_structures import tree
-from id3 import heuristics
+from id3 import information_gain
 
 
 def construct(data, target_attribute, attributes_to_test):
@@ -38,7 +38,7 @@ def construct(data, target_attribute, attributes_to_test):
         return tree.Node(target_attribute)
 
     # check the best heuristic
-    selected_heuristic = heuristics.ig_heuristic(data, attributes_to_test, target_attribute, {})
+    selected_heuristic = information_gain.ig_heuristic(data, attributes_to_test, target_attribute, {})
 
     # insert the best heuristic at root
     node = tree.Node(selected_heuristic)
