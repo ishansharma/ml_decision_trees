@@ -36,8 +36,6 @@ def construct(data, target_attribute, attributes_to_test, heuristic="ig"):
 
     # if we don't have any attributes, return most common value in root node
     if len(attributes_to_test) == 0:
-        # found this elegant solution on Stack Overflow, https://stackoverflow.com/a/15139677/616941
-        most_common_value = getattr(data, target_attribute).value_counts().idxmax()
         return tree.Node(target_attribute)
 
     # check the best heuristic
@@ -46,6 +44,12 @@ def construct(data, target_attribute, attributes_to_test, heuristic="ig"):
     else:
         selected_heuristic = information_gain.ig_heuristic(data, attributes_to_test, target_attribute, {})
 
+    if selected_heuristic == '':
+        # found this elegant solution on Stack Overflow, https://stackoverflow.com/a/15139677/616941
+        most_common_value = getattr(data, target_attribute).value_counts().idxmax()
+        return tree.Node(most_common_value)
+
+    # print("selected heuristic is", selected_heuristic)
     # insert the best heuristic at root
     node = tree.Node(selected_heuristic)
 
