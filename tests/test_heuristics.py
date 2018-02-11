@@ -3,6 +3,7 @@ import unittest
 import pandas as pd
 
 from id3 import information_gain
+from id3 import variance_impurity
 
 
 class TestHeuristics(unittest.TestCase):
@@ -21,6 +22,20 @@ class TestHeuristics(unittest.TestCase):
 
         # edge case: no entropy
         self.assertAlmostEqual(information_gain.calculate_entropy(positives=10, negatives=0), 0.0)
+
+    def test_variance_impurity(self):
+        # for no data, impurity is 1
+        self.assertAlmostEqual(variance_impurity.calculate_variance_impurity(positives=0, negatives=0), 0.0)
+
+        # when data is spread equally, variance is 0.25
+        self.assertAlmostEqual(variance_impurity.calculate_variance_impurity(positives=5, negatives=5), 0.25)
+        self.assertAlmostEqual(variance_impurity.calculate_variance_impurity(positives=20, negatives=20), 0.25)
+
+        # when data is skewed to one side, variance decreases
+        self.assertAlmostEqual(variance_impurity.calculate_variance_impurity(positives=70, negatives=30), 0.21)
+
+        # when data is uniform, variance is 0
+        self.assertAlmostEqual(variance_impurity.calculate_variance_impurity(positives=100, negatives=0), 0.0)
 
 
 class TestInformationGainHeuristic(unittest.TestCase):
