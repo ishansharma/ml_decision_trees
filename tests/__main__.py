@@ -3,6 +3,7 @@ import unittest
 
 from tests import test_accuracy
 from tests import test_id3_heuristics
+from tests import test_pruner
 from tests import test_tree_construction
 
 
@@ -21,6 +22,9 @@ def suite():
     # tests for accuracy
     test_suite.addTest(test_accuracy.TestAccuracy('test_for_booleans'))
     test_suite.addTest(test_accuracy.TestAccuracy('test_inaccurate'))
+
+    # tests for pruning
+    test_suite.addTest(test_pruner.TestPruner('test_list_ordering'))
 
     return test_suite
 
