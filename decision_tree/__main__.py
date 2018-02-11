@@ -1,6 +1,7 @@
 import argparse
 
 from data_structures import tree
+from decision_tree import accuracy
 from files import reader
 from id3 import id3
 
@@ -40,4 +41,8 @@ unrooted_training_tree = id3.construct(training_data, 'Class',
 training_tree.root = unrooted_training_tree
 # tree construction is done
 
-print(training_tree)
+# validation - to be done using test set
+validation_result = accuracy.measure(training_tree, test_data, 'Class')
+
+# print(training_tree)
+print(validation_result)

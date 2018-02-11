@@ -1,6 +1,7 @@
 # code reference: https://docs.python.org/3.6/library/unittest.html#module-unittest
 import unittest
 
+from tests import test_accuracy
 from tests import test_id3_heuristics
 from tests import test_tree_construction
 
@@ -16,6 +17,9 @@ def suite():
 
     # tests for tree construction
     test_suite.addTest(test_tree_construction.TestTreeConstruction('test_binary_expression'))
+
+    # tests for accuracy
+    test_suite.addTest(test_accuracy.TestAccuracy('test_for_booleans'))
 
     return test_suite
 
