@@ -20,6 +20,7 @@ def suite():
 
     # tests for accuracy
     test_suite.addTest(test_accuracy.TestAccuracy('test_for_booleans'))
+    test_suite.addTest(test_accuracy.TestAccuracy('test_inaccurate'))
 
     return test_suite
 
