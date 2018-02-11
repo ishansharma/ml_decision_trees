@@ -1,26 +1,63 @@
 import copy
+import random
 from collections import deque, Counter
 
 from data_structures import tree as t
+from decision_tree import accuracy
 
 
 class Pruner:
-    def __init__(self, dt, l, k):
-        self.initial = dt
+    def __init__(self, dt, l, k, validation_data):
+        """
+        Setup our class
+        Parameters
+        ----------
+        dt: DecisionTree
+        l: int
+        k: int
+        validation_data: DataFrame
+            We test our accuracy against these samples
+        """
+        self.initial_tree = dt
         self.best = dt  # input tree is the best initially
         self.l = l
         self.k = k
+        self.validation_data = validation_data
 
-    # def prune(self):
+    def prune(self):
+        """
+        Randomly prune the tree L * K times
+        Returns
+        -------
+        DecisionTree
+            Best decision tree encountered
+        """
+        current_accuracy = accuracy.measure(self.initial_tree, self.validation_data, 'Class')
+        for i in range(1, self.l):
+            new_tree = copy.copy(self.initial_tree)
+            replacements = random.randrange(2, self.k)
 
-    def _order_non_leaf_nodes(self, tree, filter_leaves=True):
+            for j in range(3, replacements):
+                number_of_nodes = len(self._order_nodes(new_tree))
+                p = random.randrange(1, number_of_nodes)
+
+                new_tree = self._replace_node_with_majority_class(new_tree, p)
+
+            pruned_tree_accuracy = accuracy.measure(new_tree, self.validation_data, 'Class')
+
+            if pruned_tree_accuracy > current_accuracy:
+                self.best = copy.copy(new_tree)
+
+        return self.best
+
+    def _order_nodes(self, tree, filter_leaves=True):
         """
         Returned a list of nodes, breadth first
         Parameters
         ----------
+        tree : DecisionTree
         filter_leaves : bool
             True to filter 0 and 1, False otherwise
-        tree : DecisionTree
 
         Returns
         -------
@@ -112,7 +149,7 @@ class Pruner:
         int
             Majority class, either 0 or 1
         """
-        nodes = self._order_non_leaf_nodes(tree, False)
+        nodes = self._order_nodes(tree, False)
         element_count = Counter(nodes)
 
         if len(element_count) >= 2 and element_count[0] < element_count[1]:

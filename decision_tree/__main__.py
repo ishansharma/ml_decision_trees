@@ -1,9 +1,11 @@
 import argparse
+import copy
 
 from data_structures import tree
 from decision_tree import accuracy
 from files import reader
 from id3 import id3
+from post_pruning import random
 
 parser = argparse.ArgumentParser(description="""Creates a decision tree from given files with Information Gain and Variance Impurity heuristics. 
  After constructing, it will do post pruning Then outputs accuracies and if asked, prints the decision tree""")
@@ -41,8 +43,16 @@ unrooted_training_tree = id3.construct(training_data, 'Class',
 training_tree.root = unrooted_training_tree
 # tree construction is done
 
-# validation - to be done using test set
-validation_result = accuracy.measure(training_tree, test_data, 'Class')
+# prune the tree
+pruner = random.Pruner(copy.deepcopy(training_tree), 10, 9, validation_data)
+pruned_tree = pruner.prune()
+
+# accuracy of our original tree
+original_accuracy = accuracy.measure(copy.deepcopy(training_tree), copy.deepcopy(test_data), 'Class')
+
+# accuracy of pruned tree
+pruned_accuracy = accuracy.measure(copy.deepcopy(pruned_tree), copy.deepcopy(test_data), 'Class')
 
 # print(training_tree)
-print(validation_result)
+print("Original accuracy:", original_accuracy)
+print("Pruned tree accuracy:", pruned_accuracy)

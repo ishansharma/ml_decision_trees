@@ -23,8 +23,8 @@ class TestPruner(unittest.TestCase):
         unrooted_tree = id3.construct(df, 'Class', df.columns)
         dt.root = unrooted_tree
 
-        p = random.Pruner(dt, 5, 10)
-        ordered_nodes = p._order_non_leaf_nodes(dt)
+        p = random.Pruner(dt, 5, 10, df)
+        ordered_nodes = p._order_nodes(dt)
         expected_nodes = ['a', 'b', 'c', 'c', 'd', 'd']
 
         self.assertCountEqual(ordered_nodes, expected_nodes)
@@ -44,8 +44,8 @@ class TestPruner(unittest.TestCase):
         unrooted_tree = id3.construct(df, 'Class', df.columns)
         dt.root = unrooted_tree
 
-        p = random.Pruner(dt, 5, 10)
-        ordered_nodes = p._order_non_leaf_nodes(dt, False)
+        p = random.Pruner(dt, 5, 10, df)
+        ordered_nodes = p._order_nodes(dt, False)
         expected_nodes = ['a', 'b', 'c', 0, 'c', 'd', 1, 'd', 1, 0, 1, 0, 1]
 
         self.assertCountEqual(ordered_nodes, expected_nodes)
@@ -65,7 +65,7 @@ class TestPruner(unittest.TestCase):
         unrooted_tree = id3.construct(df, 'Class', df.columns)
         dt.root = unrooted_tree
 
-        p = random.Pruner(dt, 5, 10)
+        p = random.Pruner(dt, 5, 10, df)
 
         majority_class = p._find_majority_class(dt)
 
@@ -87,7 +87,7 @@ class TestPruner(unittest.TestCase):
         unrooted_tree = id3.construct(df, 'Class', df.columns)
         dt.root = unrooted_tree
 
-        p = random.Pruner(dt, 5, 10)
+        p = random.Pruner(dt, 5, 10, df)
 
         pruned_tree = p._replace_node_with_majority_class(dt, 1)
         # print(pruned_tree)
