@@ -18,11 +18,11 @@ At least Python 3.2 is required.
     - `training-set` is absolute or relative path to the training set
     - `validation-set` is absolute or relative path to the training set
     - `test-set` is absolute or relative path to the test set
-    - `to-print` should be 'y' or 'n' depending on whether you want to see the pruned trees printed or not
+    - `to-print` should be 'yes' or 'no' depending on whether you want to see the pruned trees printed or not
 
 You can also see the argument descriptions by entering `python3 ./decision_tree -h` in terminal. 
 
-#### Copyright 2018 Ishan Sharma
+#### &copy; 2018 Ishan Sharma
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

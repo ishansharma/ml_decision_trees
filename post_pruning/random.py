@@ -61,7 +61,7 @@ class Pruner:
 
         Returns
         -------
-        list
+        array
         """
         node_list = []
         traversal_queue = deque([tree.root])
