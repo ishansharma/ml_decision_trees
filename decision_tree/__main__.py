@@ -67,3 +67,12 @@ print("Original IG accuracy:", ig_original_accuracy)
 print("Original VI accuracy:", vi_original_accuracy)
 print("Pruned IG tree accuracy:", pruned_accuracy_for_ig)
 print("Pruned VI tree accuracy:", pruned_accuracy_for_vi)
+
+print("==========")
+print("Pruned Trees:")
+print("For IG Heuristic:")
+print(pruned_ig_tree)
+
+print("**********")
+print("For VI Heuristic:")
+print(pruned_vi_tree)
