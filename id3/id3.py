@@ -20,7 +20,8 @@ def construct(data, target_attribute, attributes_to_test):
 
     Returns
     -------
-
+    node: Node
+        Node that may contain children. It's essentially a search tree without root.
     """
     attributes_to_test = list(attributes_to_test)  # needed to make sure we can iterate
 
